@@ -6,7 +6,7 @@ function lerp(a: number, b: number, t: number) {
   return a + (b - a) * t;
 }
 
-export function AuroraCanvas() {
+export function AuroraCanvas({ forceMotion = false }: { forceMotion?: boolean }) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
   useEffect(() => {
@@ -16,7 +16,7 @@ export function AuroraCanvas() {
     const context = canvas.getContext("2d", { alpha: true });
     if (!context) return;
 
-    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches && !forceMotion;
     let raf = 0;
     let width = 0;
     let height = 0;
@@ -75,7 +75,7 @@ export function AuroraCanvas() {
       context.save();
       context.globalCompositeOperation = "screen";
       for (let i = 0; i < 7; i += 1) {
-        const x = ((i * 0.17 + t * 0.008) % 1) * width;
+        const x = ((i * 0.17 + t * 0.026) % 1) * width;
         const alpha = 0.055 + Math.sin(t * 0.55 + i) * 0.022;
         const gradient = context.createLinearGradient(x, 0, x + width * 0.16, height);
         gradient.addColorStop(0, `rgba(142, 179, 255, 0)`);
@@ -102,7 +102,7 @@ export function AuroraCanvas() {
       context.save();
       context.globalCompositeOperation = "lighter";
       context.translate(cx, cy);
-      context.rotate(t * 0.035);
+      context.rotate(t * 0.085);
       context.scale(1.45, 0.48);
       for (let i = 0; i < 3; i += 1) {
         context.beginPath();
@@ -149,7 +149,7 @@ export function AuroraCanvas() {
         lerp(height * 0.12, height * 0.18, mobile ? 1 : 0),
         (mobile ? 34 : 58) * intensity,
         mobile ? 34 : 72,
-        0.38,
+        0.92,
         ["rgba(88, 242, 223, 0.34)", "rgba(129, 111, 255, 0.58)", "rgba(232, 85, 255, 0.28)"],
         0.2
       );
@@ -158,7 +158,7 @@ export function AuroraCanvas() {
         height * 0.28,
         (mobile ? 28 : 50) * intensity,
         mobile ? 28 : 58,
-        -0.28,
+        -0.72,
         ["rgba(129, 111, 255, 0.24)", "rgba(91, 244, 224, 0.36)", "rgba(120, 90, 255, 0.42)"],
         1.8
       );
@@ -167,7 +167,7 @@ export function AuroraCanvas() {
         height * 0.48,
         (mobile ? 18 : 38) * intensity,
         mobile ? 18 : 42,
-        0.22,
+        0.54,
         ["rgba(232, 85, 255, 0.16)", "rgba(129, 111, 255, 0.3)", "rgba(85, 240, 220, 0.22)"],
         3.2
       );
@@ -181,8 +181,11 @@ export function AuroraCanvas() {
 
     resize();
     window.addEventListener("resize", resize);
-    render(0);
-    if (!reducedMotion) raf = requestAnimationFrame(render);
+    if (reducedMotion) {
+      render(0);
+    } else {
+      raf = requestAnimationFrame(render);
+    }
 
     return () => {
       cancelAnimationFrame(raf);

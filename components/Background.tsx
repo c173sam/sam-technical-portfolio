@@ -3,7 +3,7 @@
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { AuroraCanvas } from "@/components/AuroraCanvas";
 
-export function Background() {
+export function Background({ forceMotion = false }: { forceMotion?: boolean }) {
   const reducedMotion = useReducedMotion();
   const { scrollYProgress } = useScroll();
   const y = useTransform(scrollYProgress, [0, 1], ["0%", "12%"]);
@@ -11,12 +11,12 @@ export function Background() {
 
   return (
     <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden bg-bg">
-      <AuroraCanvas />
+      <AuroraCanvas forceMotion={forceMotion} />
       <motion.div
         aria-hidden
         className="aurora-mask aurora-flow absolute -top-52 left-1/2 h-[840px] w-[1320px] -translate-x-1/2 rounded-full blur-3xl opacity-70"
         animate={
-          reducedMotion
+          reducedMotion && !forceMotion
             ? undefined
             : {
                 opacity: [0.55, 0.82, 0.62, 0.55]
@@ -41,14 +41,14 @@ export function Background() {
       <motion.div
         aria-hidden
         className="absolute right-[-16rem] top-[12%] h-[620px] w-[620px] rounded-full blur-3xl"
-        animate={reducedMotion ? undefined : { opacity: [0.2, 0.38, 0.24], scale: [1, 1.1, 1] }}
+        animate={reducedMotion && !forceMotion ? undefined : { opacity: [0.2, 0.38, 0.24], scale: [1, 1.1, 1] }}
         style={{ background: "radial-gradient(circle, oklch(var(--accent) / 0.2), transparent 66%)" }}
         transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
       />
       <motion.div
         aria-hidden
         className="absolute bottom-[-22rem] left-[-16rem] h-[760px] w-[760px] rounded-full blur-3xl"
-        animate={reducedMotion ? undefined : { opacity: [0.16, 0.32, 0.18], scale: [1.04, 0.98, 1.04] }}
+        animate={reducedMotion && !forceMotion ? undefined : { opacity: [0.16, 0.32, 0.18], scale: [1.04, 0.98, 1.04] }}
         style={{ background: "radial-gradient(circle, oklch(var(--primary) / 0.28), transparent 70%)" }}
         transition={{ duration: 17, repeat: Infinity, ease: "easeInOut" }}
       />
