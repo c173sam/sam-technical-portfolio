@@ -1,6 +1,7 @@
 "use client";
 
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
+import { AuroraCanvas } from "@/components/AuroraCanvas";
 
 export function Background() {
   const reducedMotion = useReducedMotion();
@@ -10,9 +11,10 @@ export function Background() {
 
   return (
     <div className="fixed inset-0 -z-10 overflow-hidden bg-bg">
+      <AuroraCanvas />
       <motion.div
         aria-hidden
-        className="aurora-mask aurora-flow absolute -top-52 left-1/2 h-[840px] w-[1320px] -translate-x-1/2 rounded-full blur-3xl"
+        className="aurora-mask aurora-flow absolute -top-52 left-1/2 h-[840px] w-[1320px] -translate-x-1/2 rounded-full blur-3xl opacity-70"
         animate={
           reducedMotion
             ? undefined

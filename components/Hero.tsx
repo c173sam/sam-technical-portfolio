@@ -21,6 +21,17 @@ export function Hero() {
 
       <motion.div style={{ y: heroY, opacity }} className="mx-auto grid w-full max-w-7xl items-center gap-10 pt-16 lg:grid-cols-[1.05fr_0.95fr]">
         <div className="relative">
+          <div
+            aria-hidden
+            className="pointer-events-none absolute -left-16 top-10 hidden h-56 w-56 rounded-full border border-accent/10 opacity-70 lg:block"
+            style={{ boxShadow: "0 0 80px oklch(var(--primary) / 0.12), inset 0 0 50px oklch(var(--accent) / 0.06)" }}
+          />
+          <motion.div
+            aria-hidden
+            className="pointer-events-none absolute -left-10 top-24 hidden h-px w-72 origin-left bg-gradient-to-r from-accent/70 via-primary/40 to-transparent lg:block"
+            animate={reducedMotion ? undefined : { scaleX: [0.35, 1, 0.52], opacity: [0.25, 0.85, 0.35] }}
+            transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut" }}
+          />
           <motion.div
             initial={reducedMotion ? false : { opacity: 0, y: 18, filter: "blur(8px)" }}
             animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
@@ -88,10 +99,10 @@ export function Hero() {
             initial={reducedMotion ? false : { opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.75, delay: 0.92, ease: [0.16, 1, 0.3, 1] }}
-            className="mt-10 flex flex-wrap gap-2"
+            className="mt-10 grid max-w-2xl grid-cols-2 gap-2 sm:flex sm:flex-wrap"
           >
             {["Support", "Delivery", "PMO", "AI Landing"].map((tag) => (
-              <span key={tag} className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 text-xs font-medium text-muted backdrop-blur-xl">
+              <span key={tag} className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 text-center text-xs font-medium text-muted backdrop-blur-xl">
                 {tag}
               </span>
             ))}
@@ -157,6 +168,15 @@ export function Hero() {
           </div>
 
           <div className="relative mt-4 grid min-h-[190px] place-items-center overflow-hidden rounded-xl border border-white/10 bg-black/24">
+            <div
+              aria-hidden
+              className="absolute inset-0 opacity-40"
+              style={{
+                background:
+                  "linear-gradient(90deg, transparent 0 49%, oklch(1 0 0 / 0.07) 50%, transparent 51%), linear-gradient(0deg, transparent 0 49%, oklch(1 0 0 / 0.055) 50%, transparent 51%)",
+                backgroundSize: "28px 28px"
+              }}
+            />
             <div className="absolute h-56 w-56 rounded-full border border-white/10" />
             <div className="absolute h-36 w-36 rounded-full border border-accent/20 shadow-[0_0_70px_oklch(var(--accent)/0.16)]" />
             <motion.div
