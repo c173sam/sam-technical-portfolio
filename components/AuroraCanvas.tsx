@@ -2,10 +2,6 @@
 
 import { useEffect, useRef } from "react";
 
-function lerp(a: number, b: number, t: number) {
-  return a + (b - a) * t;
-}
-
 export function AuroraCanvas({ forceMotion = false }: { forceMotion?: boolean }) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
@@ -33,103 +29,107 @@ export function AuroraCanvas({ forceMotion = false }: { forceMotion?: boolean })
       context.setTransform(dpr, 0, 0, dpr, 0, 0);
     };
 
-    const drawRibbon = (
-      t: number,
-      baseY: number,
-      amplitude: number,
-      thickness: number,
-      speed: number,
-      colors: [string, string, string],
-      offset: number
-    ) => {
-      const gradient = context.createLinearGradient(width * 0.08, baseY - amplitude, width * 0.92, baseY + amplitude);
-      gradient.addColorStop(0, "rgba(0,0,0,0)");
-      gradient.addColorStop(0.22, colors[0]);
-      gradient.addColorStop(0.52, colors[1]);
-      gradient.addColorStop(0.78, colors[2]);
-      gradient.addColorStop(1, "rgba(0,0,0,0)");
-
+    const drawAtmosphere = (t: number) => {
       context.save();
       context.globalCompositeOperation = "lighter";
-      context.filter = `blur(${Math.max(12, thickness * 0.2)}px)`;
-      context.lineWidth = thickness;
-      context.lineCap = "round";
-      context.lineJoin = "round";
-      context.strokeStyle = gradient;
+      context.filter = "blur(54px)";
 
-      context.beginPath();
-      for (let i = -60; i <= width + 60; i += 28) {
-        const p = i / Math.max(width, 1);
-        const waveA = Math.sin(p * Math.PI * 2.2 + t * speed + offset) * amplitude;
-        const waveB = Math.sin(p * Math.PI * 5.1 - t * speed * 0.62 + offset * 0.7) * amplitude * 0.34;
-        const drift = Math.sin(t * speed * 0.22 + offset) * amplitude * 0.25;
-        const y = baseY + waveA + waveB + drift;
-        if (i === -60) context.moveTo(i, y);
-        else context.lineTo(i, y);
+      const fields = [
+        {
+          x: 0.34 + Math.sin(t * 0.08) * 0.08,
+          y: 0.2 + Math.cos(t * 0.06) * 0.04,
+          r: 0.58,
+          color: "rgba(110, 96, 255, 0.22)"
+        },
+        {
+          x: 0.68 + Math.cos(t * 0.07 + 1.4) * 0.07,
+          y: 0.28 + Math.sin(t * 0.05) * 0.05,
+          r: 0.52,
+          color: "rgba(74, 221, 207, 0.16)"
+        },
+        {
+          x: 0.48 + Math.sin(t * 0.05 + 3.5) * 0.05,
+          y: 0.6 + Math.cos(t * 0.04) * 0.04,
+          r: 0.6,
+          color: "rgba(198, 88, 255, 0.12)"
+        }
+      ];
+
+      for (const field of fields) {
+        const radius = Math.max(width, height) * field.r;
+        const gradient = context.createRadialGradient(width * field.x, height * field.y, 0, width * field.x, height * field.y, radius);
+        gradient.addColorStop(0, field.color);
+        gradient.addColorStop(0.42, field.color.replace(/0\.\d+\)/, "0.07)"));
+        gradient.addColorStop(1, "rgba(0,0,0,0)");
+        context.fillStyle = gradient;
+        context.fillRect(-80, -80, width + 160, height + 160);
       }
-      context.stroke();
       context.restore();
     };
 
-    const drawLightColumns = (t: number) => {
+    const drawAuroraSheet = (t: number, mobile: boolean) => {
       context.save();
-      context.globalCompositeOperation = "screen";
-      for (let i = 0; i < 7; i += 1) {
-        const x = ((i * 0.17 + t * 0.026) % 1) * width;
-        const alpha = 0.055 + Math.sin(t * 0.55 + i) * 0.022;
-        const gradient = context.createLinearGradient(x, 0, x + width * 0.16, height);
-        gradient.addColorStop(0, `rgba(142, 179, 255, 0)`);
-        gradient.addColorStop(0.35, `rgba(139, 117, 255, ${alpha})`);
-        gradient.addColorStop(0.65, `rgba(85, 240, 220, ${alpha * 0.75})`);
-        gradient.addColorStop(1, `rgba(142, 179, 255, 0)`);
-        context.fillStyle = gradient;
+      context.globalCompositeOperation = "lighter";
+      context.filter = `blur(${mobile ? 34 : 52}px)`;
+
+      const gradient = context.createLinearGradient(0, height * 0.05, width, height * 0.58);
+      gradient.addColorStop(0, "rgba(0,0,0,0)");
+      gradient.addColorStop(0.18, "rgba(82, 240, 221, 0.16)");
+      gradient.addColorStop(0.48, "rgba(126, 101, 255, 0.36)");
+      gradient.addColorStop(0.72, "rgba(210, 88, 255, 0.16)");
+      gradient.addColorStop(1, "rgba(0,0,0,0)");
+      context.fillStyle = gradient;
+
+      for (let band = 0; band < 3; band += 1) {
+        const yBase = height * (0.12 + band * 0.12);
+        const amp = (mobile ? 26 : 54) - band * 8;
+        const phase = t * (0.16 + band * 0.045) + band * 1.7;
+
         context.beginPath();
-        context.moveTo(x - width * 0.08, 0);
-        context.lineTo(x + width * 0.08, 0);
-        context.lineTo(x + width * 0.24, height);
-        context.lineTo(x - width * 0.02, height);
+        context.moveTo(-80, yBase + Math.sin(phase) * amp);
+
+        for (let x = -80; x <= width + 120; x += width / 5) {
+          const p = x / Math.max(width, 1);
+          const cp1x = x + width / 9;
+          const cp2x = x + width / 5;
+          const cp1y = yBase + Math.sin(p * 5.2 + phase) * amp + Math.cos(phase * 0.7) * 24;
+          const cp2y = yBase + Math.cos(p * 4.1 - phase * 0.85) * amp;
+          const endY = yBase + Math.sin(p * 6.1 + phase * 0.72) * amp;
+          context.bezierCurveTo(cp1x, cp1y, cp2x, cp2y, x + width / 4.8, endY);
+        }
+
+        context.lineTo(width + 140, yBase + (mobile ? 95 : 150));
+        context.lineTo(-120, yBase + (mobile ? 110 : 170));
         context.closePath();
+        context.globalAlpha = 0.58 - band * 0.12;
         context.fill();
       }
       context.restore();
     };
 
-    const drawOrbit = (t: number) => {
-      const cx = width * 0.72;
-      const cy = height * 0.42;
-      const radius = Math.min(width, height) * 0.24;
-
-      context.save();
-      context.globalCompositeOperation = "lighter";
-      context.translate(cx, cy);
-      context.rotate(t * 0.085);
-      context.scale(1.45, 0.48);
-      for (let i = 0; i < 3; i += 1) {
-        context.beginPath();
-        context.strokeStyle = `rgba(${i === 1 ? "85, 240, 220" : "136, 116, 255"}, ${0.08 - i * 0.014})`;
-        context.lineWidth = 1.2;
-        context.arc(0, 0, radius + i * 42, 0, Math.PI * 1.45);
-        context.stroke();
-      }
-      context.restore();
-    };
-
-    const drawDepthGlow = (t: number) => {
+    const drawFineLines = (t: number) => {
       context.save();
       context.globalCompositeOperation = "screen";
-      const glows = [
-        { x: 0.18 + Math.sin(t * 0.11) * 0.04, y: 0.22, r: 0.42, c: "rgba(105, 95, 255, 0.28)" },
-        { x: 0.82 + Math.sin(t * 0.09 + 2) * 0.03, y: 0.52, r: 0.38, c: "rgba(82, 236, 218, 0.2)" },
-        { x: 0.48 + Math.sin(t * 0.07 + 4) * 0.05, y: 0.88, r: 0.5, c: "rgba(214, 92, 255, 0.16)" }
-      ];
+      context.filter = "blur(0.4px)";
+      context.lineWidth = 1;
 
-      for (const glow of glows) {
-        const radius = Math.max(width, height) * glow.r;
-        const gradient = context.createRadialGradient(width * glow.x, height * glow.y, 0, width * glow.x, height * glow.y, radius);
-        gradient.addColorStop(0, glow.c);
+      for (let i = 0; i < 5; i += 1) {
+        const y = height * (0.18 + i * 0.13) + Math.sin(t * 0.12 + i) * 22;
+        const gradient = context.createLinearGradient(0, y, width, y + 60);
+        gradient.addColorStop(0, "rgba(0,0,0,0)");
+        gradient.addColorStop(0.34, "rgba(86, 232, 220, 0.08)");
+        gradient.addColorStop(0.58, "rgba(126, 101, 255, 0.13)");
         gradient.addColorStop(1, "rgba(0,0,0,0)");
-        context.fillStyle = gradient;
-        context.fillRect(0, 0, width, height);
+
+        context.strokeStyle = gradient;
+        context.beginPath();
+        for (let x = -40; x <= width + 40; x += 32) {
+          const p = x / Math.max(width, 1);
+          const lineY = y + Math.sin(p * 8 + t * 0.22 + i) * 11;
+          if (x === -40) context.moveTo(x, lineY);
+          else context.lineTo(x, lineY);
+        }
+        context.stroke();
       }
       context.restore();
     };
@@ -141,38 +141,10 @@ export function AuroraCanvas({ forceMotion = false }: { forceMotion?: boolean })
       const mobile = width < 760;
       const intensity = mobile ? 0.68 : 1;
 
-      drawDepthGlow(t);
-      drawLightColumns(t);
-
-      drawRibbon(
-        t,
-        lerp(height * 0.12, height * 0.18, mobile ? 1 : 0),
-        (mobile ? 34 : 58) * intensity,
-        mobile ? 34 : 72,
-        0.92,
-        ["rgba(88, 242, 223, 0.34)", "rgba(129, 111, 255, 0.58)", "rgba(232, 85, 255, 0.28)"],
-        0.2
-      );
-      drawRibbon(
-        t,
-        height * 0.28,
-        (mobile ? 28 : 50) * intensity,
-        mobile ? 28 : 58,
-        -0.72,
-        ["rgba(129, 111, 255, 0.24)", "rgba(91, 244, 224, 0.36)", "rgba(120, 90, 255, 0.42)"],
-        1.8
-      );
-      drawRibbon(
-        t,
-        height * 0.48,
-        (mobile ? 18 : 38) * intensity,
-        mobile ? 18 : 42,
-        0.54,
-        ["rgba(232, 85, 255, 0.16)", "rgba(129, 111, 255, 0.3)", "rgba(85, 240, 220, 0.22)"],
-        3.2
-      );
-
-      if (!mobile) drawOrbit(t);
+      context.globalAlpha = intensity;
+      drawAtmosphere(t);
+      drawAuroraSheet(t, mobile);
+      drawFineLines(t);
 
       if (!reducedMotion) {
         raf = requestAnimationFrame(render);

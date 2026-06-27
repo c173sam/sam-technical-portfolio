@@ -5,10 +5,6 @@ export default function BackgroundLab() {
     <main className="relative min-h-screen overflow-hidden bg-bg text-ink">
       <Background forceMotion />
       <section className="relative z-10 flex min-h-screen items-center justify-center px-5">
-        <div className="pointer-events-none absolute inset-0 overflow-hidden">
-          <div className="preview-sweep absolute left-[-30%] top-[18%] h-64 w-[70%] rotate-[-12deg] bg-gradient-to-r from-transparent via-accent/20 to-transparent blur-2xl" />
-          <div className="preview-sweep-delayed absolute right-[-35%] top-[52%] h-72 w-[76%] rotate-[10deg] bg-gradient-to-r from-transparent via-primary/24 to-transparent blur-2xl" />
-        </div>
         <div className="pointer-events-none absolute inset-x-8 top-8 flex items-center justify-between rounded-full border border-white/10 bg-black/18 px-4 py-3 text-xs text-muted backdrop-blur-xl sm:text-sm">
           <span>Dynamic Background Lab</span>
           <span className="text-accent">Aurora · Grid · Glow · Noise</span>

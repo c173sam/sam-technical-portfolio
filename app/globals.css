@@ -158,14 +158,6 @@ a {
     radial-gradient(circle at 82% 22%, oklch(var(--accent) / 0.1), transparent 28rem);
 }
 
-.preview-sweep {
-  animation: preview-sweep 9s ease-in-out infinite;
-}
-
-.preview-sweep-delayed {
-  animation: preview-sweep-delayed 11s ease-in-out infinite;
-}
-
 @keyframes aurora-flow {
   0% {
     transform: translate3d(-2%, -1%, 0) rotate(0deg) scale(1);
@@ -224,40 +216,6 @@ a {
   }
   to {
     transform: translateX(-50%);
-  }
-}
-
-@keyframes preview-sweep {
-  0% {
-    transform: translate3d(-18%, -8%, 0) rotate(-12deg);
-    opacity: 0;
-  }
-  28% {
-    opacity: 0.9;
-  }
-  62% {
-    opacity: 0.55;
-  }
-  100% {
-    transform: translate3d(88%, 18%, 0) rotate(-12deg);
-    opacity: 0;
-  }
-}
-
-@keyframes preview-sweep-delayed {
-  0% {
-    transform: translate3d(22%, 8%, 0) rotate(10deg);
-    opacity: 0;
-  }
-  24% {
-    opacity: 0.72;
-  }
-  64% {
-    opacity: 0.45;
-  }
-  100% {
-    transform: translate3d(-92%, -16%, 0) rotate(10deg);
-    opacity: 0;
   }
 }
 
