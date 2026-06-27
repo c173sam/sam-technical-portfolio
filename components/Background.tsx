@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
-import { AuroraCanvas } from "@/components/AuroraCanvas";
+import { ThreeBodyBackdrop } from "@/components/ThreeBodyBackdrop";
 
 export function Background({ forceMotion = false }: { forceMotion?: boolean }) {
   const reducedMotion = useReducedMotion();
@@ -11,28 +11,12 @@ export function Background({ forceMotion = false }: { forceMotion?: boolean }) {
 
   return (
     <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden bg-bg">
-      <AuroraCanvas forceMotion={forceMotion} />
-      <motion.div
-        aria-hidden
-        className="aurora-mask aurora-flow absolute -top-52 left-1/2 h-[840px] w-[1320px] -translate-x-1/2 rounded-full blur-3xl opacity-70"
-        animate={
-          reducedMotion && !forceMotion
-            ? undefined
-            : {
-                opacity: [0.55, 0.82, 0.62, 0.55]
-              }
-        }
-        style={{
-          y,
-          background:
-            "conic-gradient(from 145deg at 50% 50%, transparent 0 8%, oklch(var(--primary) / 0.62), oklch(var(--accent) / 0.38), oklch(var(--signal) / 0.34), oklch(var(--primary) / 0.56), transparent 82% 100%)"
-        }}
-        transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
-      />
+      <ThreeBodyBackdrop />
       <motion.div
         aria-hidden
         className="absolute left-1/2 top-[15%] h-px w-[min(980px,78vw)] -translate-x-1/2"
         style={{
+          y,
           background:
             "linear-gradient(90deg, transparent, oklch(var(--accent) / 0.72), oklch(var(--primary) / 0.46), transparent)",
           boxShadow: "0 0 42px oklch(var(--accent) / 0.38)"
@@ -40,38 +24,21 @@ export function Background({ forceMotion = false }: { forceMotion?: boolean }) {
       />
       <motion.div
         aria-hidden
-        className="absolute right-[-16rem] top-[12%] h-[620px] w-[620px] rounded-full blur-3xl"
-        animate={reducedMotion && !forceMotion ? undefined : { opacity: [0.2, 0.38, 0.24], scale: [1, 1.1, 1] }}
-        style={{ background: "radial-gradient(circle, oklch(var(--accent) / 0.2), transparent 66%)" }}
-        transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
-      />
-      <motion.div
-        aria-hidden
-        className="absolute bottom-[-22rem] left-[-16rem] h-[760px] w-[760px] rounded-full blur-3xl"
-        animate={reducedMotion && !forceMotion ? undefined : { opacity: [0.16, 0.32, 0.18], scale: [1.04, 0.98, 1.04] }}
-        style={{ background: "radial-gradient(circle, oklch(var(--primary) / 0.28), transparent 70%)" }}
-        transition={{ duration: 17, repeat: Infinity, ease: "easeInOut" }}
-      />
-      <motion.div
-        aria-hidden
-        className="grid-mask grid-drift absolute inset-0 opacity-[0.32]"
+        className="grid-mask absolute inset-0 opacity-[0.12]"
         style={{
           y: gridY,
           backgroundImage:
-            "linear-gradient(oklch(1 0 0 / 0.07) 1px, transparent 1px), linear-gradient(90deg, oklch(1 0 0 / 0.07) 1px, transparent 1px)",
-          backgroundSize: "48px 48px"
+            "linear-gradient(oklch(1 0 0 / 0.08) 1px, transparent 1px), linear-gradient(90deg, oklch(1 0 0 / 0.08) 1px, transparent 1px)",
+          backgroundSize: "74px 74px"
         }}
       />
-      <div
+      <motion.div
         aria-hidden
-        className="absolute inset-x-[-10%] top-[10%] h-32 rotate-[-7deg] opacity-70 blur-xl"
-        style={{
-          background:
-            "linear-gradient(90deg, transparent, oklch(var(--primary) / 0.18), oklch(var(--accent) / 0.12), transparent)"
-        }}
+        className="absolute inset-x-[-10%] top-[10%] h-20 rotate-[-4deg] opacity-40 blur-xl"
+        animate={reducedMotion && !forceMotion ? undefined : { x: ["-2%", "2%", "-2%"], opacity: [0.22, 0.42, 0.22] }}
+        style={{ background: "linear-gradient(90deg, transparent, oklch(var(--accent) / 0.12), transparent)" }}
+        transition={{ duration: 14, repeat: Infinity, ease: "easeInOut" }}
       />
-      <div aria-hidden className="scanline absolute left-0 top-[28%] h-px w-full" />
-      <div aria-hidden className="noise absolute inset-0 opacity-55 mix-blend-soft-light" />
       <div
         aria-hidden
         className="absolute inset-0"

@@ -1,231 +1,130 @@
 "use client";
 
-import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
-import { profile, quickFacts } from "@/data/profile";
+import { motion, useReducedMotion } from "framer-motion";
+import { profile } from "@/data/profile";
 
-const titleWords = [profile.name, "/", profile.englishName];
-const signalRows = ["Network baseline", "Support workflow", "Deployment notes", "AI adoption map"];
+const hudLines = [
+  ["Candidate", `${profile.name} / ${profile.englishName}`],
+  ["City", profile.targetCity],
+  ["Major", profile.major],
+  ["Graduation", profile.graduation]
+];
+
+const roleSignal = ["Technical Support", "IT Support", "PMO", "Solution Intern", "FDE探索"];
 
 export function Hero() {
   const reducedMotion = useReducedMotion();
-  const { scrollYProgress } = useScroll();
-  const heroY = useTransform(scrollYProgress, [0, 0.34], ["0px", reducedMotion ? "0px" : "76px"]);
-  const opacity = useTransform(scrollYProgress, [0, 0.28], [1, 0.32]);
 
   return (
-    <section className="relative flex min-h-[96svh] items-center px-5 py-20 sm:px-8 lg:px-10">
-      <div className="pointer-events-none absolute inset-x-5 top-5 mx-auto hidden max-w-7xl items-center justify-between rounded-full border border-white/10 bg-black/18 px-4 py-3 text-sm text-muted backdrop-blur-xl md:flex">
-        <span>Sam / Technical Portfolio</span>
-        <span className="text-accent">Shanghai · 2027 · Internship Ready</span>
+    <section className="relative min-h-[100svh] overflow-hidden px-5 py-5 sm:px-8 lg:px-10">
+      <motion.div
+        className="pointer-events-none absolute left-1/2 top-5 hidden -translate-x-1/2 text-center md:block"
+        initial={reducedMotion ? false : { opacity: 0, y: -8 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+      >
+        <p className="text-[11px] text-white/34">Sam / Technical Portfolio</p>
+        <div className="mx-auto mt-2 h-px w-48 bg-gradient-to-r from-transparent via-cyan-100/24 to-transparent" />
+      </motion.div>
+
+      <div className="pointer-events-none absolute left-5 top-6 hidden w-44 text-[10px] leading-6 text-white/22 md:block lg:left-10">
+        {["Chaotic Era", "Internship signal", "Support route", "AI landing"].map((item, index) => (
+          <motion.div
+            key={item}
+            className="border-b border-cyan-100/10 py-1"
+            initial={reducedMotion ? false : { opacity: 0, x: -12 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, delay: 0.25 + index * 0.08, ease: [0.16, 1, 0.3, 1] }}
+          >
+            {item}
+          </motion.div>
+        ))}
       </div>
 
-      <motion.div style={{ y: heroY, opacity }} className="mx-auto grid w-full max-w-7xl items-center gap-10 pt-16 lg:grid-cols-[1.05fr_0.95fr]">
-        <div className="relative">
-          <div
-            aria-hidden
-            className="pointer-events-none absolute -left-16 top-10 hidden h-56 w-56 rounded-full border border-accent/10 opacity-70 lg:block"
-            style={{ boxShadow: "0 0 80px oklch(var(--primary) / 0.12), inset 0 0 50px oklch(var(--accent) / 0.06)" }}
-          />
+      <div className="pointer-events-none absolute right-5 top-[41%] hidden w-52 text-right text-[10px] leading-6 text-white/22 md:block lg:right-10">
+        {hudLines.map(([label, value], index) => (
           <motion.div
-            aria-hidden
-            className="pointer-events-none absolute -left-10 top-24 hidden h-px w-72 origin-left bg-gradient-to-r from-accent/70 via-primary/40 to-transparent lg:block"
-            animate={reducedMotion ? undefined : { scaleX: [0.35, 1, 0.52], opacity: [0.25, 0.85, 0.35] }}
-            transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut" }}
-          />
-          <motion.div
-            initial={reducedMotion ? false : { opacity: 0, y: 18, filter: "blur(8px)" }}
-            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-            transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1] }}
-            className="mb-7 inline-flex items-center gap-3 rounded-full border border-white/14 bg-white/[0.055] px-4 py-2 text-sm text-muted shadow-insetline backdrop-blur-xl"
+            key={label}
+            className="border-b border-cyan-100/10 py-1"
+            initial={reducedMotion ? false : { opacity: 0, x: 14 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, delay: 0.35 + index * 0.08, ease: [0.16, 1, 0.3, 1] }}
           >
-            <span className="pulse-core h-2 w-2 rounded-full bg-accent shadow-[0_0_20px_oklch(var(--accent)/0.9)]" />
-            Technical Portfolio · AI deployment mindset
+            <span className="text-white/20">{label}</span>
+            <span className="ml-3 text-cyan-100/42">{value}</span>
           </motion.div>
+        ))}
+      </div>
 
-          <h1 className="hero-title text-balance max-w-5xl text-[clamp(4.3rem,12vw,6rem)] font-semibold leading-[0.9] tracking-[-0.038em] text-ink">
-            {titleWords.map((word, index) => (
-              <motion.span
-                key={word + index}
-                className="inline-block"
-                initial={reducedMotion ? false : { opacity: 0, y: 62, filter: "blur(12px)" }}
-                animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-                transition={{ duration: 0.95, delay: 0.1 + index * 0.12, ease: [0.16, 1, 0.3, 1] }}
-              >
-                {word}
-                {index === 0 ? "\u00A0" : ""}
-              </motion.span>
-            ))}
+      <div className="relative z-10 mx-auto flex min-h-[calc(100svh-2.5rem)] max-w-7xl flex-col justify-end pb-9">
+        <motion.div
+          className="max-w-[520px] border-l border-cyan-100/16 pl-4"
+          initial={reducedMotion ? false : { opacity: 0, y: 24, filter: "blur(10px)" }}
+          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          transition={{ duration: 1.05, delay: 0.38, ease: [0.16, 1, 0.3, 1] }}
+        >
+          <p className="text-xs text-cyan-100/50">THREE-BODY CANDIDATE SYSTEM</p>
+          <h1 className="mt-3 text-balance text-[clamp(2.15rem,5vw,3.8rem)] font-semibold leading-[0.98] tracking-[-0.032em] text-white/88">
+            {profile.name}
+            <span className="text-white/42"> / </span>
+            {profile.englishName}
           </h1>
-
-          <motion.p
-            initial={reducedMotion ? false : { opacity: 0, y: 22 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.75, delay: 0.52, ease: [0.16, 1, 0.3, 1] }}
-            className="text-pretty mt-8 max-w-3xl text-lg leading-8 text-muted sm:text-xl"
-          >
-            {profile.roles.join(" / ")}
-          </motion.p>
-
-          <motion.p
-            initial={reducedMotion ? false : { opacity: 0, y: 22 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.75, delay: 0.64, ease: [0.16, 1, 0.3, 1] }}
-            className="text-pretty mt-5 max-w-2xl text-base leading-8 text-muted"
-          >
-            {profile.summary}
-          </motion.p>
-
-          <motion.div
-            initial={reducedMotion ? false : { opacity: 0, y: 22 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.75, delay: 0.78, ease: [0.16, 1, 0.3, 1] }}
-            className="mt-9 flex flex-col gap-3 sm:flex-row"
-          >
-            <a
-              href="#profile"
-              className="beam inline-flex h-12 items-center justify-center rounded-full bg-ink px-6 text-sm font-semibold text-bg shadow-[0_0_38px_oklch(var(--primary)/0.22)] transition-transform duration-300 hover:-translate-y-0.5"
-            >
-              View Resume
-            </a>
-            <a
-              href="#projects"
-              className="beam inline-flex h-12 items-center justify-center rounded-full border border-white/14 bg-white/[0.055] px-6 text-sm font-semibold text-ink backdrop-blur-xl transition-transform duration-300 hover:-translate-y-0.5"
-            >
-              Projects
-            </a>
-            <a
-              href="#contact"
-              className="beam inline-flex h-12 items-center justify-center rounded-full border border-white/14 bg-white/[0.055] px-6 text-sm font-semibold text-ink backdrop-blur-xl transition-transform duration-300 hover:-translate-y-0.5"
-            >
-              Contact Me
-            </a>
-          </motion.div>
-
-          <motion.div
-            initial={reducedMotion ? false : { opacity: 0, y: 18 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.75, delay: 0.92, ease: [0.16, 1, 0.3, 1] }}
-            className="mt-10 grid max-w-2xl grid-cols-2 gap-2 sm:flex sm:flex-wrap"
-          >
-            {["Support", "Delivery", "PMO", "AI Landing"].map((tag) => (
-              <span key={tag} className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 text-center text-xs font-medium text-muted backdrop-blur-xl">
-                {tag}
-              </span>
-            ))}
-          </motion.div>
-        </div>
+          <p className="mt-4 max-w-xl text-pretty text-sm leading-7 text-white/50 sm:text-base">{profile.summary}</p>
+        </motion.div>
 
         <motion.div
-          initial={reducedMotion ? false : { opacity: 0, x: 28, filter: "blur(10px)" }}
-          animate={{ opacity: 1, x: 0, filter: "blur(0px)" }}
-          transition={{ duration: 0.9, delay: 0.44, ease: [0.16, 1, 0.3, 1] }}
-          className="metal-panel relative overflow-hidden rounded-2xl p-4 sm:p-5"
+          className="mt-6 flex max-w-3xl flex-wrap gap-2"
+          initial={reducedMotion ? false : { opacity: 0, y: 18 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.9, delay: 0.62, ease: [0.16, 1, 0.3, 1] }}
         >
-          <div className="panel-grid pointer-events-none absolute inset-0 opacity-50" />
-          <div className="scanline absolute left-0 top-20 h-px w-full" />
-
-          <div className="relative rounded-xl border border-white/10 bg-black/28 p-4">
-            <div className="flex items-center justify-between gap-4">
-              <div>
-                <p className="text-xs text-muted">Candidate Command Center</p>
-                <p className="mt-1 text-lg font-semibold tracking-[-0.02em] text-ink">
-                  {profile.name} / {profile.englishName}
-                </p>
-              </div>
-              <span className="rounded-full border border-accent/30 bg-accent/10 px-3 py-1 text-xs font-medium text-accent">
-                ACTIVE
-              </span>
-            </div>
-          </div>
-
-          <div className="relative mt-4 grid gap-3 sm:grid-cols-2">
-            {quickFacts.map((fact) => (
-              <div key={fact.label} className="rounded-xl border border-white/10 bg-white/[0.035] p-4">
-                <p className="text-xs text-muted">{fact.label}</p>
-                <p className="mt-2 text-sm font-semibold text-ink">{fact.value}</p>
-              </div>
-            ))}
-          </div>
-
-          <div className="relative mt-4 rounded-xl border border-white/10 bg-black/22 p-4">
-            <div className="mb-4 flex items-center justify-between">
-              <p className="text-xs font-medium text-muted">Readiness Signals</p>
-              <p className="text-xs text-accent">Support → Delivery → AI</p>
-            </div>
-            <div className="space-y-3">
-              {signalRows.map((row, index) => (
-                <div key={row} className="grid grid-cols-[132px_1fr] items-center gap-3">
-                  <span className="text-xs text-muted">{row}</span>
-                  <span className="h-2 overflow-hidden rounded-full bg-white/[0.065]">
-                    <motion.span
-                      className="block h-full rounded-full"
-                      style={{
-                        background:
-                          "linear-gradient(90deg, oklch(var(--accent) / 0.8), oklch(var(--primary) / 0.9), oklch(var(--signal) / 0.72))"
-                      }}
-                      initial={reducedMotion ? false : { width: "18%" }}
-                      animate={{ width: `${62 + index * 8}%` }}
-                      transition={{ duration: 1.2, delay: 0.85 + index * 0.12, ease: [0.16, 1, 0.3, 1] }}
-                    />
-                  </span>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="relative mt-4 grid min-h-[190px] place-items-center overflow-hidden rounded-xl border border-white/10 bg-black/24">
-            <div
-              aria-hidden
-              className="absolute inset-0 opacity-40"
-              style={{
-                background:
-                  "linear-gradient(90deg, transparent 0 49%, oklch(1 0 0 / 0.07) 50%, transparent 51%), linear-gradient(0deg, transparent 0 49%, oklch(1 0 0 / 0.055) 50%, transparent 51%)",
-                backgroundSize: "28px 28px"
-              }}
-            />
-            <div className="absolute h-56 w-56 rounded-full border border-white/10" />
-            <div className="absolute h-36 w-36 rounded-full border border-accent/20 shadow-[0_0_70px_oklch(var(--accent)/0.16)]" />
-            <motion.div
-              aria-hidden
-              className="absolute h-44 w-44 rounded-full border border-transparent"
-              style={{
-                borderTopColor: "oklch(var(--accent) / 0.72)",
-                borderRightColor: "oklch(var(--primary) / 0.36)"
-              }}
-              animate={reducedMotion ? undefined : { rotate: 360 }}
-              transition={{ duration: 16, repeat: Infinity, ease: "linear" }}
-            />
-            <motion.div
-              aria-hidden
-              className="absolute h-24 w-24 rounded-full border border-transparent"
-              style={{
-                borderBottomColor: "oklch(var(--signal) / 0.62)",
-                borderLeftColor: "oklch(var(--accent) / 0.34)"
-              }}
-              animate={reducedMotion ? undefined : { rotate: -360 }}
-              transition={{ duration: 12, repeat: Infinity, ease: "linear" }}
-            />
-            <div className="relative text-center">
-              <p className="text-xs text-muted">Target City</p>
-              <p className="mt-1 text-4xl font-semibold tracking-[-0.03em] text-ink">上海</p>
-              <p className="mt-2 text-xs text-muted">Technical Support · Project Intern</p>
-            </div>
-          </div>
+          {roleSignal.map((role) => (
+            <span key={role} className="rounded-full border border-cyan-100/12 bg-black/20 px-3 py-1.5 text-[11px] text-white/48 backdrop-blur-md">
+              {role}
+            </span>
+          ))}
         </motion.div>
-      </motion.div>
+
+        <motion.div
+          className="mt-6 flex flex-col gap-3 sm:flex-row"
+          initial={reducedMotion ? false : { opacity: 0, y: 18 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.9, delay: 0.76, ease: [0.16, 1, 0.3, 1] }}
+        >
+          <a
+            href="#profile"
+            className="beam inline-flex h-10 items-center justify-center rounded-full border border-cyan-100/22 bg-black/24 px-5 text-xs font-semibold text-white/76 backdrop-blur-md transition-transform duration-300 hover:-translate-y-0.5"
+          >
+            View Profile
+          </a>
+          <a
+            href="#contact"
+            className="beam inline-flex h-10 items-center justify-center rounded-full border border-white/14 bg-black/20 px-5 text-xs font-semibold text-white/66 backdrop-blur-md transition-transform duration-300 hover:-translate-y-0.5"
+          >
+            Contact
+          </a>
+          <a
+            href="#projects"
+            className="beam inline-flex h-10 items-center justify-center rounded-full border border-white/14 bg-black/20 px-5 text-xs font-semibold text-white/66 backdrop-blur-md transition-transform duration-300 hover:-translate-y-0.5"
+          >
+            Projects
+          </a>
+        </motion.div>
+      </div>
+
       <motion.a
         href="#profile"
         aria-label="Scroll to profile"
-        className="absolute bottom-6 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-3 text-xs text-muted md:flex"
-        initial={reducedMotion ? false : { opacity: 0, y: -8 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: 1.1, ease: [0.16, 1, 0.3, 1] }}
+        className="absolute bottom-6 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-2 text-[11px] text-white/28 md:flex"
+        initial={reducedMotion ? false : { opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1, delay: 1.1, ease: [0.16, 1, 0.3, 1] }}
       >
         <span>Scroll</span>
         <motion.span
-          className="h-10 w-px bg-gradient-to-b from-accent via-white/20 to-transparent"
-          animate={reducedMotion ? undefined : { scaleY: [0.45, 1, 0.45], opacity: [0.35, 1, 0.35] }}
-          transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
+          className="h-10 w-px bg-gradient-to-b from-cyan-100/70 via-white/16 to-transparent"
+          animate={reducedMotion ? undefined : { scaleY: [0.55, 1, 0.55], opacity: [0.35, 0.9, 0.35] }}
+          transition={{ duration: 2.8, repeat: Infinity, ease: "easeInOut" }}
         />
       </motion.a>
     </section>
