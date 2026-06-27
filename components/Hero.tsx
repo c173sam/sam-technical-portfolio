@@ -85,13 +85,19 @@ export function Hero() {
               href="#profile"
               className="beam inline-flex h-12 items-center justify-center rounded-full bg-ink px-6 text-sm font-semibold text-bg shadow-[0_0_38px_oklch(var(--primary)/0.22)] transition-transform duration-300 hover:-translate-y-0.5"
             >
-              View Profile
+              View Resume
+            </a>
+            <a
+              href="#projects"
+              className="beam inline-flex h-12 items-center justify-center rounded-full border border-white/14 bg-white/[0.055] px-6 text-sm font-semibold text-ink backdrop-blur-xl transition-transform duration-300 hover:-translate-y-0.5"
+            >
+              Projects
             </a>
             <a
               href="#contact"
               className="beam inline-flex h-12 items-center justify-center rounded-full border border-white/14 bg-white/[0.055] px-6 text-sm font-semibold text-ink backdrop-blur-xl transition-transform duration-300 hover:-translate-y-0.5"
             >
-              Contact
+              Contact Me
             </a>
           </motion.div>
 
@@ -207,6 +213,21 @@ export function Hero() {
           </div>
         </motion.div>
       </motion.div>
+      <motion.a
+        href="#profile"
+        aria-label="Scroll to profile"
+        className="absolute bottom-6 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-3 text-xs text-muted md:flex"
+        initial={reducedMotion ? false : { opacity: 0, y: -8 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, delay: 1.1, ease: [0.16, 1, 0.3, 1] }}
+      >
+        <span>Scroll</span>
+        <motion.span
+          className="h-10 w-px bg-gradient-to-b from-accent via-white/20 to-transparent"
+          animate={reducedMotion ? undefined : { scaleY: [0.45, 1, 0.45], opacity: [0.35, 1, 0.35] }}
+          transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
+        />
+      </motion.a>
     </section>
   );
 }

@@ -1,5 +1,6 @@
 import { Background } from "@/components/Background";
 import { ContactSection } from "@/components/ContactSection";
+import { ExperimentsSection } from "@/components/ExperimentsSection";
 import { Hero } from "@/components/Hero";
 import { ProfileSection } from "@/components/ProfileSection";
 import { SkillsBento } from "@/components/SkillsBento";
@@ -13,6 +14,7 @@ export default function Home() {
       <ProfileSection />
       <SkillsBento />
       <Timeline />
+      <ExperimentsSection />
       <ContactSection />
     </main>
   );

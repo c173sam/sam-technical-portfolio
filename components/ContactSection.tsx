@@ -24,7 +24,17 @@ export function ContactSection() {
               <p className="mt-2 text-2xl font-semibold tracking-[-0.02em] text-ink">
                 {profile.name} / {profile.englishName}
               </p>
-              <p className="mt-5 text-sm leading-7 text-muted">{profile.school} · {profile.major} · {profile.graduation}</p>
+              <div className="mt-5 grid gap-3 text-sm leading-7 text-muted">
+                <p>{profile.school} · {profile.major} · {profile.graduation}</p>
+                <p>City · {profile.targetCity}</p>
+                <p>Email · {profile.email || "待补充 / 通过投递平台联系"}</p>
+              </div>
+              <a
+                href={profile.email ? `mailto:${profile.email}` : "#profile"}
+                className="beam mt-6 inline-flex h-11 items-center justify-center rounded-full border border-white/14 bg-white/[0.055] px-5 text-sm font-semibold text-ink backdrop-blur-xl transition-transform duration-300 hover:-translate-y-0.5"
+              >
+                Contact Me
+              </a>
             </div>
           </div>
         </div>

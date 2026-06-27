@@ -5,6 +5,7 @@ export const profile = {
   major: "现代通信技术",
   graduation: "2027年",
   targetCity: "上海",
+  email: "",
   roles: [
     "Technical Support",
     "IT Support",
@@ -64,6 +65,47 @@ export const skills = [
     title: "AI应用落地方向探索",
     body: "关注企业数字化场景中 AI 工具如何进入支持、交付、知识库和流程自动化。",
     span: "md:col-span-2"
+  }
+];
+
+export const skillGroups = [
+  {
+    title: "Technical Support",
+    summary: "问题理解、复现、排查、记录、升级和闭环。",
+    items: ["问题定位", "用户沟通", "排障记录", "知识库意识"]
+  },
+  {
+    title: "Project Support",
+    summary: "面向 PMO / Project Intern 的进度、会议和材料协作。",
+    items: ["会议纪要", "进度跟踪", "需求拆解", "交付材料"]
+  },
+  {
+    title: "Tools",
+    summary: "办公、工程协作和基础运维工具链持续学习。",
+    items: ["Office", "Excel", "Git 学习中", "Linux 学习中"]
+  },
+  {
+    title: "Communication",
+    summary: "将技术问题翻译成可协作、可追踪、可交付的信息。",
+    items: ["文档整理", "跨角色同步", "英文环境适应", "AI应用落地探索"]
+  }
+];
+
+export const experiments = [
+  {
+    title: "Learning Projects",
+    label: "In progress",
+    body: "围绕通信基础、网络基础和技术支持场景整理学习笔记，逐步沉淀为可复用的排障与知识库材料。"
+  },
+  {
+    title: "Web Experiments",
+    label: "Exploring",
+    body: "通过个人作品集页面练习 Next.js、Tailwind CSS、Framer Motion 与前端动效表达，理解技术内容如何被清晰呈现。"
+  },
+  {
+    title: "Deployment Practice",
+    label: "Practical",
+    body: "使用 GitHub 与 GitHub Pages 完成静态站点部署，熟悉从本地构建到线上发布的基础流程。"
   }
 ];
 
