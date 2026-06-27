@@ -158,6 +158,104 @@ a {
     radial-gradient(circle at 82% 22%, oklch(var(--accent) / 0.1), transparent 28rem);
 }
 
+.halo-stage {
+  position: absolute;
+  inset: -18%;
+  transform: translate3d(0, 0, 0);
+  filter: saturate(1.16);
+}
+
+.halo-field,
+.halo-core {
+  position: absolute;
+  inset: 0;
+  will-change: transform, opacity, filter, border-radius;
+  transform: translate3d(0, 0, 0);
+  mix-blend-mode: screen;
+}
+
+.halo-field-a {
+  top: -12%;
+  left: 5%;
+  width: 92%;
+  height: 62%;
+  opacity: 0.76;
+  border-radius: 62% 38% 46% 54% / 48% 54% 46% 52%;
+  background:
+    radial-gradient(ellipse at 34% 44%, rgba(93, 242, 224, 0.34) 0%, rgba(93, 242, 224, 0.12) 24%, transparent 58%),
+    radial-gradient(ellipse at 65% 34%, rgba(126, 104, 255, 0.46) 0%, rgba(126, 104, 255, 0.14) 28%, transparent 64%),
+    radial-gradient(ellipse at 54% 68%, rgba(218, 96, 255, 0.2) 0%, transparent 54%);
+  filter: blur(76px);
+  animation:
+    halo-drift-a 28s ease-in-out infinite,
+    halo-morph 18s ease-in-out infinite;
+}
+
+.halo-field-b {
+  right: -4%;
+  top: 12%;
+  width: 82%;
+  height: 72%;
+  opacity: 0.58;
+  border-radius: 44% 56% 64% 36% / 62% 36% 64% 38%;
+  background:
+    radial-gradient(ellipse at 58% 42%, rgba(104, 91, 255, 0.38) 0%, rgba(104, 91, 255, 0.13) 31%, transparent 67%),
+    radial-gradient(ellipse at 35% 62%, rgba(64, 214, 207, 0.2) 0%, transparent 56%),
+    radial-gradient(ellipse at 74% 76%, rgba(255, 116, 232, 0.12) 0%, transparent 52%);
+  filter: blur(96px);
+  animation:
+    halo-drift-b 34s ease-in-out infinite,
+    halo-pulse 11s ease-in-out infinite;
+}
+
+.halo-field-c {
+  left: -18%;
+  bottom: -22%;
+  width: 94%;
+  height: 68%;
+  opacity: 0.42;
+  border-radius: 50% 50% 36% 64% / 54% 48% 52% 46%;
+  background:
+    radial-gradient(ellipse at 48% 34%, rgba(75, 236, 224, 0.16) 0%, transparent 58%),
+    radial-gradient(ellipse at 64% 62%, rgba(115, 92, 255, 0.28) 0%, transparent 64%);
+  filter: blur(112px);
+  animation:
+    halo-drift-c 40s ease-in-out infinite,
+    halo-morph 24s ease-in-out infinite reverse;
+}
+
+.halo-core {
+  left: 18%;
+  top: -18%;
+  width: 72%;
+  height: 48%;
+  opacity: 0.34;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center, rgba(220, 236, 255, 0.28) 0%, rgba(94, 229, 226, 0.13) 28%, transparent 68%);
+  filter: blur(54px);
+  animation: halo-core-breathe 8s ease-in-out infinite;
+}
+
+.halo-grid {
+  position: absolute;
+  inset: 0;
+  opacity: 0.27;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.07) 1px, transparent 1px);
+  background-size: 46px 46px;
+  mask-image: radial-gradient(ellipse at 50% 28%, black 0 42%, transparent 78%);
+  animation: grid-drift 32s linear infinite;
+}
+
+.halo-vignette {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 50% 18%, transparent 0%, rgba(0, 0, 0, 0.2) 48%, rgba(0, 0, 0, 0.82) 100%),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.08), rgba(0, 0, 0, 0.76));
+}
+
 @keyframes aurora-flow {
   0% {
     transform: translate3d(-2%, -1%, 0) rotate(0deg) scale(1);
@@ -216,6 +314,73 @@ a {
   }
   to {
     transform: translateX(-50%);
+  }
+}
+
+@keyframes halo-drift-a {
+  0%,
+  100% {
+    transform: translate3d(-3%, -1%, 0) rotate(-2deg) scale(1);
+  }
+  50% {
+    transform: translate3d(5%, 6%, 0) rotate(7deg) scale(1.08);
+  }
+}
+
+@keyframes halo-drift-b {
+  0%,
+  100% {
+    transform: translate3d(4%, 1%, 0) rotate(4deg) scale(1);
+  }
+  50% {
+    transform: translate3d(-5%, -4%, 0) rotate(-8deg) scale(1.06);
+  }
+}
+
+@keyframes halo-drift-c {
+  0%,
+  100% {
+    transform: translate3d(-2%, 3%, 0) rotate(0deg) scale(1.02);
+  }
+  50% {
+    transform: translate3d(6%, -4%, 0) rotate(6deg) scale(0.96);
+  }
+}
+
+@keyframes halo-morph {
+  0%,
+  100% {
+    border-radius: 62% 38% 46% 54% / 48% 54% 46% 52%;
+  }
+  33% {
+    border-radius: 42% 58% 62% 38% / 62% 40% 60% 38%;
+  }
+  66% {
+    border-radius: 56% 44% 34% 66% / 42% 62% 38% 58%;
+  }
+}
+
+@keyframes halo-pulse {
+  0%,
+  100% {
+    opacity: 0.46;
+    filter: blur(98px);
+  }
+  50% {
+    opacity: 0.66;
+    filter: blur(116px);
+  }
+}
+
+@keyframes halo-core-breathe {
+  0%,
+  100% {
+    opacity: 0.24;
+    transform: scale(0.95);
+  }
+  50% {
+    opacity: 0.42;
+    transform: scale(1.08);
   }
 }
 

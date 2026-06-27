@@ -1,9 +1,9 @@
-import { Background } from "@/components/Background";
+import { HaloBackdrop } from "@/components/HaloBackdrop";
 
 export default function BackgroundLab() {
   return (
     <main className="relative min-h-screen overflow-hidden bg-bg text-ink">
-      <Background forceMotion />
+      <HaloBackdrop />
       <section className="relative z-10 flex min-h-screen items-center justify-center px-5">
         <div className="pointer-events-none absolute inset-x-8 top-8 flex items-center justify-between rounded-full border border-white/10 bg-black/18 px-4 py-3 text-xs text-muted backdrop-blur-xl sm:text-sm">
           <span>Dynamic Background Lab</span>
