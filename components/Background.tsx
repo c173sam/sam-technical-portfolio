@@ -54,7 +54,7 @@ export function Background() {
       />
       <motion.div
         aria-hidden
-        className="grid-mask grid-drift absolute inset-0 opacity-[0.24]"
+        className="grid-mask grid-drift absolute inset-0 opacity-[0.32]"
         style={{
           y: gridY,
           backgroundImage:
@@ -71,7 +71,7 @@ export function Background() {
         }}
       />
       <div aria-hidden className="scanline absolute left-0 top-[28%] h-px w-full" />
-      <div aria-hidden className="noise absolute inset-0 opacity-45 mix-blend-soft-light" />
+      <div aria-hidden className="noise absolute inset-0 opacity-55 mix-blend-soft-light" />
       <div
         aria-hidden
         className="absolute inset-0"

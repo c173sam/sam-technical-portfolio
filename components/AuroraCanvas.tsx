@@ -51,7 +51,7 @@ export function AuroraCanvas() {
 
       context.save();
       context.globalCompositeOperation = "lighter";
-      context.filter = `blur(${Math.max(10, thickness * 0.18)}px)`;
+      context.filter = `blur(${Math.max(12, thickness * 0.2)}px)`;
       context.lineWidth = thickness;
       context.lineCap = "round";
       context.lineJoin = "round";
@@ -76,7 +76,7 @@ export function AuroraCanvas() {
       context.globalCompositeOperation = "screen";
       for (let i = 0; i < 7; i += 1) {
         const x = ((i * 0.17 + t * 0.008) % 1) * width;
-        const alpha = 0.04 + Math.sin(t * 0.55 + i) * 0.018;
+        const alpha = 0.055 + Math.sin(t * 0.55 + i) * 0.022;
         const gradient = context.createLinearGradient(x, 0, x + width * 0.16, height);
         gradient.addColorStop(0, `rgba(142, 179, 255, 0)`);
         gradient.addColorStop(0.35, `rgba(139, 117, 255, ${alpha})`);
@@ -114,6 +114,26 @@ export function AuroraCanvas() {
       context.restore();
     };
 
+    const drawDepthGlow = (t: number) => {
+      context.save();
+      context.globalCompositeOperation = "screen";
+      const glows = [
+        { x: 0.18 + Math.sin(t * 0.11) * 0.04, y: 0.22, r: 0.42, c: "rgba(105, 95, 255, 0.18)" },
+        { x: 0.82 + Math.sin(t * 0.09 + 2) * 0.03, y: 0.52, r: 0.38, c: "rgba(82, 236, 218, 0.13)" },
+        { x: 0.48 + Math.sin(t * 0.07 + 4) * 0.05, y: 0.88, r: 0.5, c: "rgba(214, 92, 255, 0.09)" }
+      ];
+
+      for (const glow of glows) {
+        const radius = Math.max(width, height) * glow.r;
+        const gradient = context.createRadialGradient(width * glow.x, height * glow.y, 0, width * glow.x, height * glow.y, radius);
+        gradient.addColorStop(0, glow.c);
+        gradient.addColorStop(1, "rgba(0,0,0,0)");
+        context.fillStyle = gradient;
+        context.fillRect(0, 0, width, height);
+      }
+      context.restore();
+    };
+
     const render = (time: number) => {
       const t = time / 1000;
       context.clearRect(0, 0, width, height);
@@ -121,6 +141,7 @@ export function AuroraCanvas() {
       const mobile = width < 760;
       const intensity = mobile ? 0.68 : 1;
 
+      drawDepthGlow(t);
       drawLightColumns(t);
 
       drawRibbon(

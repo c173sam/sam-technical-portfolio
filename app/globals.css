@@ -148,6 +148,16 @@ a {
   animation: pulse-core 4.8s ease-in-out infinite;
 }
 
+.tag-marquee {
+  animation: tag-marquee 28s linear infinite;
+}
+
+.section-haze {
+  background:
+    radial-gradient(circle at 22% 16%, oklch(var(--primary) / 0.14), transparent 32rem),
+    radial-gradient(circle at 82% 22%, oklch(var(--accent) / 0.1), transparent 28rem);
+}
+
 @keyframes aurora-flow {
   0% {
     transform: translate3d(-2%, -1%, 0) rotate(0deg) scale(1);
@@ -197,6 +207,15 @@ a {
   50% {
     opacity: 1;
     transform: scale(1.04);
+  }
+}
+
+@keyframes tag-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
   }
 }
 
