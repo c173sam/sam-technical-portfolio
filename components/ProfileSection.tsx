@@ -15,31 +15,33 @@ export function ProfileSection() {
         </SectionHeading>
       </Reveal>
 
-      <motion.div
-        variants={staggerContainer}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: "-80px" }}
-        className="mx-auto grid max-w-7xl gap-4 md:grid-cols-4"
-      >
-        {quickFacts.map((fact) => (
-          <motion.div key={fact.label} variants={staggerItem}>
-            <GlassCard>
-              <p className="text-sm text-muted">{fact.label}</p>
-              <p className="mt-3 text-xl font-semibold tracking-[-0.02em] text-ink">{fact.value}</p>
-            </GlassCard>
-          </motion.div>
-        ))}
-      </motion.div>
-
-      <Reveal className="mx-auto mt-5 max-w-7xl">
-        <div className="glass rounded-2xl p-6 sm:p-8 md:p-10">
-          <div className="grid gap-8 md:grid-cols-[0.8fr_1.2fr] md:items-center">
+      <Reveal className="mx-auto max-w-7xl">
+        <div className="metal-panel relative overflow-hidden rounded-2xl p-5 sm:p-8 md:p-10">
+          <div className="panel-grid pointer-events-none absolute inset-0 opacity-35" />
+          <div className="relative grid gap-8 lg:grid-cols-[1fr_1.15fr] lg:items-end">
             <div>
               <p className="text-sm font-medium text-accent">Current Focus</p>
-              <h3 className="mt-3 text-2xl font-semibold tracking-[-0.025em] text-ink sm:text-3xl">企业数字化场景中的支持、协作与 AI 落地</h3>
+              <h3 className="mt-3 text-balance text-3xl font-semibold tracking-[-0.03em] text-ink sm:text-5xl">
+                企业数字化现场里的支持、协作与 AI 落地
+              </h3>
+              <p className="text-pretty mt-5 max-w-xl text-base leading-8 text-muted">{profile.summary}</p>
             </div>
-            <p className="text-pretty text-base leading-8 text-muted">{profile.summary}</p>
+            <motion.div
+              variants={staggerContainer}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-80px" }}
+              className="grid gap-3 sm:grid-cols-2"
+            >
+              {quickFacts.map((fact) => (
+                <motion.div key={fact.label} variants={staggerItem}>
+                  <GlassCard>
+                    <p className="text-xs text-muted">{fact.label}</p>
+                    <p className="mt-3 text-xl font-semibold tracking-[-0.02em] text-ink">{fact.value}</p>
+                  </GlassCard>
+                </motion.div>
+              ))}
+            </motion.div>
           </div>
         </div>
       </Reveal>

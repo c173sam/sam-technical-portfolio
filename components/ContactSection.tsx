@@ -7,8 +7,9 @@ export function ContactSection() {
   return (
     <section id="contact" className="px-5 pb-10 pt-16 sm:px-8 sm:pb-14 sm:pt-24 lg:px-10">
       <Reveal>
-        <div className="glass mx-auto max-w-7xl overflow-hidden rounded-2xl p-6 sm:p-10">
-          <div className="grid gap-8 md:grid-cols-[1.1fr_0.9fr] md:items-end">
+        <div className="metal-panel relative mx-auto max-w-7xl overflow-hidden rounded-2xl p-6 sm:p-10">
+          <div className="panel-grid pointer-events-none absolute inset-0 opacity-30" />
+          <div className="relative grid gap-8 md:grid-cols-[1.1fr_0.9fr] md:items-end">
             <div>
               <p className="text-sm font-medium text-accent">Open to Internship</p>
               <h2 className="text-balance mt-3 text-3xl font-semibold tracking-[-0.025em] text-ink sm:text-5xl">
@@ -18,7 +19,7 @@ export function ContactSection() {
                 目标城市：{profile.targetCity}。本页面没有添加虚构联系方式；如需联系，可在投递平台、邮件或招聘沟通渠道中补充。
               </p>
             </div>
-            <div className="rounded-xl border border-white/10 bg-black/18 p-5">
+            <div className="rounded-xl border border-white/10 bg-black/24 p-5">
               <p className="text-sm text-muted">Candidate</p>
               <p className="mt-2 text-2xl font-semibold tracking-[-0.02em] text-ink">
                 {profile.name} / {profile.englishName}

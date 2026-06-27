@@ -20,13 +20,21 @@ export function Timeline() {
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, margin: "-80px" }}
-        className="relative mx-auto max-w-5xl"
+        className="relative mx-auto max-w-6xl"
       >
-        <div className="absolute left-4 top-3 hidden h-[calc(100%-1.5rem)] w-px bg-white/12 md:block" />
-        <div className="grid gap-4">
+        <div className="absolute left-1/2 top-3 hidden h-[calc(100%-1.5rem)] w-px bg-gradient-to-b from-transparent via-accent/30 to-transparent md:block" />
+        <div className="grid gap-5">
           {timeline.map((item, index) => (
-            <motion.div key={item.title} variants={staggerItem} className="relative md:pl-12">
-              <div className="absolute left-[0.56rem] top-7 hidden h-3 w-3 rounded-full border border-accent bg-bg shadow-[0_0_18px_oklch(var(--accent)/0.58)] md:block" />
+            <motion.div
+              key={item.title}
+              variants={staggerItem}
+              className={`relative md:w-[calc(50%-2rem)] ${index % 2 === 0 ? "md:mr-auto" : "md:ml-auto"}`}
+            >
+              <div
+                className={`absolute top-7 hidden h-3 w-3 rounded-full border border-accent bg-bg shadow-[0_0_18px_oklch(var(--accent)/0.58)] md:block ${
+                  index % 2 === 0 ? "right-[-2.42rem]" : "left-[-2.42rem]"
+                }`}
+              />
               <GlassCard>
                 <div className="grid gap-4 sm:grid-cols-[120px_1fr] sm:items-start">
                   <p className="text-sm font-medium text-accent">Step {index + 1}</p>
