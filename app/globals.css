@@ -1,0 +1,111 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: 0.075 0 0;
+  --surface: 0.18 0.018 268.5;
+  --ink: 0.94 0.006 265;
+  --muted: 0.72 0.018 265;
+  --primary: 0.58 0.152 268.5;
+  --accent: 0.82 0.12 188;
+  --line: oklch(1 0 0 / 0.12);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  background: oklch(var(--bg));
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  color: oklch(var(--ink));
+  background: oklch(var(--bg));
+  font-family: var(--font-geist-sans), Arial, sans-serif;
+  text-rendering: geometricPrecision;
+}
+
+::selection {
+  color: oklch(0.08 0 0);
+  background: oklch(var(--accent));
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.noise {
+  background-image:
+    radial-gradient(circle at 20% 30%, oklch(1 0 0 / 0.055) 0 1px, transparent 1.2px),
+    radial-gradient(circle at 80% 70%, oklch(1 0 0 / 0.035) 0 1px, transparent 1.4px);
+  background-size: 13px 13px, 19px 19px;
+}
+
+.text-balance {
+  text-wrap: balance;
+}
+
+.text-pretty {
+  text-wrap: pretty;
+}
+
+.aurora-mask {
+  mask-image: radial-gradient(circle at 50% 12%, black 0 42%, transparent 72%);
+}
+
+.grid-mask {
+  mask-image: linear-gradient(to bottom, transparent, black 14%, black 72%, transparent);
+}
+
+.glass {
+  background:
+    linear-gradient(135deg, oklch(1 0 0 / 0.08), oklch(1 0 0 / 0.025)),
+    oklch(var(--surface) / 0.58);
+  border: 1px solid var(--line);
+  box-shadow: inset 0 1px 0 oklch(1 0 0 / 0.08);
+  backdrop-filter: blur(22px);
+}
+
+.beam {
+  position: relative;
+  overflow: hidden;
+}
+
+.beam::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  padding: 1px;
+  border-radius: inherit;
+  background: linear-gradient(115deg, transparent 0 28%, oklch(var(--accent) / 0.88), oklch(var(--primary) / 0.9), transparent 74% 100%);
+  opacity: 0;
+  transition: opacity 260ms ease;
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+}
+
+.beam:hover::before {
+  opacity: 1;
+}
+
+.perspective {
+  perspective: 1200px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 1ms !important;
+  }
+}
