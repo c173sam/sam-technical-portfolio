@@ -18,13 +18,13 @@ export function Background({ forceMotion = false }: { forceMotion?: boolean }) {
         style={{
           y,
           background:
-            "linear-gradient(90deg, transparent, oklch(var(--accent) / 0.72), oklch(var(--primary) / 0.46), transparent)",
-          boxShadow: "0 0 42px oklch(var(--accent) / 0.38)"
+            "linear-gradient(90deg, transparent, oklch(var(--accent) / 0.34), oklch(var(--primary) / 0.18), transparent)",
+          boxShadow: "0 0 34px oklch(var(--accent) / 0.14)"
         }}
       />
       <motion.div
         aria-hidden
-        className="grid-mask absolute inset-0 opacity-[0.12]"
+        className="grid-mask absolute inset-0 opacity-[0.045]"
         style={{
           y: gridY,
           backgroundImage:
@@ -34,9 +34,9 @@ export function Background({ forceMotion = false }: { forceMotion?: boolean }) {
       />
       <motion.div
         aria-hidden
-        className="absolute inset-x-[-10%] top-[10%] h-20 rotate-[-4deg] opacity-40 blur-xl"
-        animate={reducedMotion && !forceMotion ? undefined : { x: ["-2%", "2%", "-2%"], opacity: [0.22, 0.42, 0.22] }}
-        style={{ background: "linear-gradient(90deg, transparent, oklch(var(--accent) / 0.12), transparent)" }}
+        className="absolute inset-x-[-10%] top-[10%] h-20 rotate-[-4deg] opacity-20 blur-xl"
+        animate={reducedMotion && !forceMotion ? undefined : { x: ["-1%", "1%", "-1%"], opacity: [0.08, 0.18, 0.08] }}
+        style={{ background: "linear-gradient(90deg, transparent, oklch(var(--accent) / 0.07), transparent)" }}
         transition={{ duration: 14, repeat: Infinity, ease: "easeInOut" }}
       />
       <div

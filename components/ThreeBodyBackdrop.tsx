@@ -84,12 +84,12 @@ export function ThreeBodyBackdrop({ className = "" }: { className?: string }) {
 
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const random = seededRandom(173);
-    const stars: Star[] = Array.from({ length: window.innerWidth < 720 ? 150 : 260 }, () => ({
+    const stars: Star[] = Array.from({ length: window.innerWidth < 720 ? 130 : 220 }, () => ({
       x: random(),
       y: random(),
       z: random(),
-      r: 0.35 + random() * 1.45,
-      a: 0.08 + random() * 0.58,
+      r: 0.3 + random() * 1.05,
+      a: 0.05 + random() * 0.42,
       tw: 0.4 + random() * 1.8
     }));
 
@@ -124,41 +124,41 @@ export function ThreeBodyBackdrop({ className = "" }: { className?: string }) {
       ctx.font = "12px Arial, sans-serif";
       ctx.lineWidth = 1;
 
-      ctx.globalAlpha = 0.16;
-      ctx.strokeStyle = "rgba(130, 170, 190, 0.42)";
-      for (let x = (time * 0.003) % 74; x < width; x += 74) {
+      ctx.globalAlpha = 0.045;
+      ctx.strokeStyle = "rgba(150, 190, 205, 0.42)";
+      for (let x = (time * 0.0012) % 78; x < width; x += 78) {
         ctx.beginPath();
         ctx.moveTo(x, 0);
         ctx.lineTo(x, height);
         ctx.stroke();
       }
-      for (let y = (time * 0.002) % 74; y < height; y += 74) {
+      for (let y = (time * 0.0009) % 78; y < height; y += 78) {
         ctx.beginPath();
         ctx.moveTo(0, y);
         ctx.lineTo(width, y);
         ctx.stroke();
       }
 
-      ctx.globalAlpha = clamp(width / 900, 0.28, 0.62);
-      ctx.fillStyle = "rgba(218, 230, 240, 0.72)";
+      ctx.globalAlpha = clamp(width / 900, 0.22, 0.5);
+      ctx.fillStyle = "rgba(214, 226, 235, 0.62)";
       const date = new Date();
       const hour = String(date.getHours()).padStart(2, "0");
       const minute = String(date.getMinutes()).padStart(2, "0");
       ctx.textAlign = "center";
-      ctx.font = "13px Arial, sans-serif";
+      ctx.font = "12px Arial, sans-serif";
       ctx.fillText(`${hour}:${minute}`, centerX, 29);
       ctx.font = "9px Arial, sans-serif";
-      ctx.fillStyle = "rgba(166, 178, 190, 0.48)";
-      ctx.fillText("Shanghai / technical portfolio", centerX, 43);
+      ctx.fillStyle = "rgba(150, 164, 176, 0.3)";
+      ctx.fillText("Shanghai / technical portfolio", centerX, 42);
 
       if (width > 760) {
         ctx.textAlign = "left";
-        ctx.font = "10px Arial, sans-serif";
-        ctx.fillStyle = "rgba(176, 189, 200, 0.32)";
+        ctx.font = "9px Arial, sans-serif";
+        ctx.fillStyle = "rgba(176, 189, 200, 0.2)";
         ["Chaotic Era", "Signal: stable", "Orbit index", "Support path"].forEach((label, i) => {
           const y = height * 0.44 + i * 25;
           ctx.fillText(label, 52, y);
-          ctx.strokeStyle = "rgba(134, 214, 224, 0.16)";
+          ctx.strokeStyle = "rgba(134, 214, 224, 0.1)";
           ctx.beginPath();
           ctx.moveTo(52, y + 8);
           ctx.lineTo(154 + Math.sin(time * 0.001 + i) * 24, y + 8);
@@ -168,9 +168,9 @@ export function ThreeBodyBackdrop({ className = "" }: { className?: string }) {
         ctx.textAlign = "right";
         ["PROFILE", "TECH SUPPORT", "PROJECT FLOW"].forEach((label, i) => {
           const y = height * 0.42 + i * 34;
-          ctx.fillStyle = "rgba(176, 189, 200, 0.34)";
+          ctx.fillStyle = "rgba(176, 189, 200, 0.22)";
           ctx.fillText(label, width - 54, y);
-          ctx.strokeStyle = "rgba(134, 214, 224, 0.16)";
+          ctx.strokeStyle = "rgba(134, 214, 224, 0.1)";
           ctx.beginPath();
           ctx.moveTo(width - 216, y + 8);
           ctx.lineTo(width - 54, y + 8);
@@ -180,8 +180,8 @@ export function ThreeBodyBackdrop({ className = "" }: { className?: string }) {
 
       const waveY = height - 64;
       const waveWidth = Math.min(360, width * 0.42);
-      ctx.globalAlpha = 0.42;
-      ctx.strokeStyle = "rgba(220, 238, 244, 0.32)";
+      ctx.globalAlpha = 0.24;
+      ctx.strokeStyle = "rgba(220, 238, 244, 0.26)";
       ctx.beginPath();
       for (let i = 0; i <= 180; i += 1) {
         const p = i / 180;
@@ -192,7 +192,7 @@ export function ThreeBodyBackdrop({ className = "" }: { className?: string }) {
         else ctx.lineTo(x, y);
       }
       ctx.stroke();
-      ctx.fillStyle = "rgba(91, 238, 230, 0.72)";
+      ctx.fillStyle = "rgba(91, 238, 230, 0.48)";
       ctx.fillRect(width / 2 - 0.5, height - 42, 1, 34);
       ctx.restore();
     };
@@ -200,16 +200,16 @@ export function ThreeBodyBackdrop({ className = "" }: { className?: string }) {
     const render = (time: number) => {
       frame += 1;
       const motionTime = reduceMotion ? 2200 : time;
-      const cx = width / 2 + pointerX * 18;
-      const cy = height * 0.42 + pointerY * 12;
-      const scale = Math.min(width, height) * (width < 720 ? 0.12 : 0.17);
+      const cx = width / 2 + pointerX * 7;
+      const cy = height * 0.39 + pointerY * 5;
+      const scale = Math.min(width, height) * (width < 720 ? 0.07 : 0.095);
 
       ctx.fillStyle = "#020304";
       ctx.fillRect(0, 0, width, height);
 
-      const bg = ctx.createRadialGradient(cx, cy, 0, cx, cy, Math.max(width, height) * 0.68);
-      bg.addColorStop(0, "rgba(11, 18, 22, 0.96)");
-      bg.addColorStop(0.36, "rgba(4, 8, 12, 0.98)");
+      const bg = ctx.createRadialGradient(cx, cy, 0, cx, cy, Math.max(width, height) * 0.56);
+      bg.addColorStop(0, "rgba(8, 13, 15, 0.94)");
+      bg.addColorStop(0.36, "rgba(3, 6, 8, 0.98)");
       bg.addColorStop(1, "rgba(0, 0, 0, 1)");
       ctx.fillStyle = bg;
       ctx.fillRect(0, 0, width, height);
@@ -220,7 +220,7 @@ export function ThreeBodyBackdrop({ className = "" }: { className?: string }) {
         const y = (star.y * height + Math.cos(motionTime * 0.000018 * star.tw + star.x * 9) * 8) % height;
         const alpha = star.a * (0.52 + Math.sin(motionTime * 0.001 * star.tw + star.x * 8) * 0.28);
         ctx.globalAlpha = alpha;
-        ctx.fillStyle = star.z > 0.86 ? "rgba(220, 255, 248, 0.86)" : "rgba(190, 205, 215, 0.72)";
+        ctx.fillStyle = star.z > 0.88 ? "rgba(220, 255, 248, 0.74)" : "rgba(190, 205, 215, 0.56)";
         ctx.fillRect(x, y, star.r, star.r);
       });
       ctx.restore();
@@ -232,48 +232,48 @@ export function ThreeBodyBackdrop({ className = "" }: { className?: string }) {
 
       positions.forEach((_, index) => {
         ctx.beginPath();
-        for (let step = 0; step <= 96; step += 1) {
-          const p = step / 96;
-          const point = bodyPosition(index, motionTime - (1 - p) * 360000, cx, cy, scale);
+        for (let step = 0; step <= 70; step += 1) {
+          const p = step / 70;
+          const point = bodyPosition(index, motionTime - (1 - p) * 250000, cx, cy, scale);
           if (step === 0) ctx.moveTo(point.x, point.y);
           else ctx.lineTo(point.x, point.y);
         }
-        ctx.strokeStyle = index === 2 ? "rgba(104, 245, 232, 0.09)" : "rgba(255, 220, 172, 0.075)";
-        ctx.lineWidth = 0.65;
-        ctx.shadowColor = index === 2 ? "rgba(86, 242, 232, 0.12)" : "rgba(255, 190, 120, 0.09)";
-        ctx.shadowBlur = 6;
+        ctx.strokeStyle = index === 2 ? "rgba(104, 245, 232, 0.052)" : "rgba(255, 220, 172, 0.045)";
+        ctx.lineWidth = 0.5;
+        ctx.shadowColor = index === 2 ? "rgba(86, 242, 232, 0.08)" : "rgba(255, 190, 120, 0.06)";
+        ctx.shadowBlur = 4;
         ctx.stroke();
       });
 
       positions.forEach((point, index) => {
         const trail = trails[index];
         if (!reduceMotion && frame % 2 === 0) trail.push({ x: point.x, y: point.y });
-        if (trail.length > 165) trail.shift();
+        if (trail.length > 120) trail.shift();
 
         ctx.beginPath();
         trail.forEach((item, i) => {
           if (i === 0) ctx.moveTo(item.x, item.y);
           else ctx.lineTo(item.x, item.y);
         });
-        ctx.strokeStyle = index === 2 ? "rgba(100, 244, 230, 0.18)" : "rgba(255, 220, 170, 0.15)";
-        ctx.lineWidth = 1.1;
-        ctx.shadowColor = index === 2 ? "rgba(71, 244, 230, 0.28)" : "rgba(255, 190, 110, 0.22)";
-        ctx.shadowBlur = 10;
+        ctx.strokeStyle = index === 2 ? "rgba(100, 244, 230, 0.1)" : "rgba(255, 220, 170, 0.08)";
+        ctx.lineWidth = 0.8;
+        ctx.shadowColor = index === 2 ? "rgba(71, 244, 230, 0.18)" : "rgba(255, 190, 110, 0.14)";
+        ctx.shadowBlur = 7;
         ctx.stroke();
       });
 
       positions.forEach((point, index) => {
         const pulse = 1 + Math.sin(motionTime * 0.002 + index) * 0.16;
-        drawGlow(ctx, point.x, point.y, (index === 0 ? 38 : 28) * pulse, colors[index], 0.9);
-        drawGlow(ctx, point.x, point.y, (index === 0 ? 9 : 7) * pulse, colors[index], 1);
-        drawFlare(ctx, point.x, point.y, (index === 0 ? 30 : 21) * pulse, index === 2 ? 0.36 : 0.58);
+        drawGlow(ctx, point.x, point.y, (index === 0 ? 24 : 19) * pulse, colors[index], 0.82);
+        drawGlow(ctx, point.x, point.y, (index === 0 ? 5.5 : 4.5) * pulse, colors[index], 0.95);
+        drawFlare(ctx, point.x, point.y, (index === 0 ? 18 : 14) * pulse, index === 2 ? 0.28 : 0.42);
       });
 
       ctx.restore();
 
-      const wash = ctx.createRadialGradient(width * 0.52, height * 0.35, 0, width * 0.52, height * 0.35, width * 0.55);
-      wash.addColorStop(0, "rgba(34, 64, 72, 0.12)");
-      wash.addColorStop(0.36, "rgba(10, 20, 28, 0.08)");
+      const wash = ctx.createRadialGradient(width * 0.52, height * 0.35, 0, width * 0.52, height * 0.35, width * 0.48);
+      wash.addColorStop(0, "rgba(30, 54, 60, 0.08)");
+      wash.addColorStop(0.36, "rgba(10, 20, 28, 0.045)");
       wash.addColorStop(1, "rgba(0,0,0,0)");
       ctx.fillStyle = wash;
       ctx.fillRect(0, 0, width, height);
