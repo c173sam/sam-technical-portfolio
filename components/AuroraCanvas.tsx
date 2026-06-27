@@ -118,9 +118,9 @@ export function AuroraCanvas() {
       context.save();
       context.globalCompositeOperation = "screen";
       const glows = [
-        { x: 0.18 + Math.sin(t * 0.11) * 0.04, y: 0.22, r: 0.42, c: "rgba(105, 95, 255, 0.18)" },
-        { x: 0.82 + Math.sin(t * 0.09 + 2) * 0.03, y: 0.52, r: 0.38, c: "rgba(82, 236, 218, 0.13)" },
-        { x: 0.48 + Math.sin(t * 0.07 + 4) * 0.05, y: 0.88, r: 0.5, c: "rgba(214, 92, 255, 0.09)" }
+        { x: 0.18 + Math.sin(t * 0.11) * 0.04, y: 0.22, r: 0.42, c: "rgba(105, 95, 255, 0.28)" },
+        { x: 0.82 + Math.sin(t * 0.09 + 2) * 0.03, y: 0.52, r: 0.38, c: "rgba(82, 236, 218, 0.2)" },
+        { x: 0.48 + Math.sin(t * 0.07 + 4) * 0.05, y: 0.88, r: 0.5, c: "rgba(214, 92, 255, 0.16)" }
       ];
 
       for (const glow of glows) {
@@ -150,7 +150,7 @@ export function AuroraCanvas() {
         (mobile ? 34 : 58) * intensity,
         mobile ? 34 : 72,
         0.38,
-        ["rgba(88, 242, 223, 0.18)", "rgba(129, 111, 255, 0.34)", "rgba(232, 85, 255, 0.14)"],
+        ["rgba(88, 242, 223, 0.34)", "rgba(129, 111, 255, 0.58)", "rgba(232, 85, 255, 0.28)"],
         0.2
       );
       drawRibbon(
@@ -159,7 +159,7 @@ export function AuroraCanvas() {
         (mobile ? 28 : 50) * intensity,
         mobile ? 28 : 58,
         -0.28,
-        ["rgba(129, 111, 255, 0.12)", "rgba(91, 244, 224, 0.2)", "rgba(120, 90, 255, 0.28)"],
+        ["rgba(129, 111, 255, 0.24)", "rgba(91, 244, 224, 0.36)", "rgba(120, 90, 255, 0.42)"],
         1.8
       );
       drawRibbon(
@@ -168,7 +168,7 @@ export function AuroraCanvas() {
         (mobile ? 18 : 38) * intensity,
         mobile ? 18 : 42,
         0.22,
-        ["rgba(232, 85, 255, 0.08)", "rgba(129, 111, 255, 0.18)", "rgba(85, 240, 220, 0.12)"],
+        ["rgba(232, 85, 255, 0.16)", "rgba(129, 111, 255, 0.3)", "rgba(85, 240, 220, 0.22)"],
         3.2
       );
 

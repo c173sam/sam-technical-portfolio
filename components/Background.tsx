@@ -10,7 +10,7 @@ export function Background() {
   const gridY = useTransform(scrollYProgress, [0, 1], ["0%", "-7%"]);
 
   return (
-    <div className="fixed inset-0 -z-10 overflow-hidden bg-bg">
+    <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden bg-bg">
       <AuroraCanvas />
       <motion.div
         aria-hidden

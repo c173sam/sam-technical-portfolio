@@ -10,12 +10,14 @@ export default function Home() {
   return (
     <main className="relative overflow-hidden">
       <Background />
-      <Hero />
-      <ProfileSection />
-      <SkillsBento />
-      <Timeline />
-      <ExperimentsSection />
-      <ContactSection />
+      <div className="relative z-10">
+        <Hero />
+        <ProfileSection />
+        <SkillsBento />
+        <Timeline />
+        <ExperimentsSection />
+        <ContactSection />
+      </div>
     </main>
   );
 }
